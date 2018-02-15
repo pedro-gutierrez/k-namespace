@@ -1,0 +1,7 @@
+---
+- name: "Delete {{ name }} namespace"
+  shell: "kubectl delete namespace {{ name }}"
+  ignore_errors: yes
+
+- name: "Create {{ name }} namespace"
+  shell: "kubectl create namespace {{ name }}"
