@@ -2,6 +2,13 @@
 - name: "Delete {{ name }} namespace"
   shell: "kubectl delete namespace {{ name }}"
   ignore_errors: yes
+ 
+- name: Wait for {{ name }} namespace to be deleted
+  shell: "kubectl get namespaces "
+  register: result
+  until: result.stdout.find(name) == -1
+  retries: "{{ retry.max }}"
+  delay: "{{ retry.delay }}"
 
 - name: "Create {{ name }} namespace"
   shell: "kubectl create namespace {{ name }}"
